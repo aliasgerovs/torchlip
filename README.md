@@ -40,14 +40,6 @@ This project aims to implement a CLIP (Contrastive Language–Image Pretraining)
 - **Functional CLIP Model:** An operational model capable of accurately interpreting and relating images to textual descriptions.
 - **Enhanced Understanding:** Insights into the complex dynamics between visual and textual data, potentially paving the way for more intuitive AI systems.
 
-## How to Contribute
-
-Interested in contributing to this project? Please follow these steps:
-
-1. **Fork the Repository:** Start by forking the repository to make your contributions.
-2. **Create a Pull Request:** After making your changes, create a pull request for review.
-3. **Code Review:** Your contributions will be reviewed and merged if they enhance the project.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
