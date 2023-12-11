@@ -2,49 +2,45 @@ import gc
 import numpy as np
 import pandas as pd
 import os
-import cv2
-import itertools
-import torch
-from torch import nn
-import torch.nn.functional as F
-import timm
-from tqdm.autonotebook import tqdm
-from albumentations.pytorch import ToTensorV2
-import albumentations as A
-import matplotlib.pyplot as plt
-from transformers import DistilBertModel, DistilBertConfig, DistilBertTokenizer
-
-
 class CFG:
+    # Basic configuration
     debug = False
-    image_path = image_path
-    captions_path = captions_path
     batch_size = 32
     num_workers = 2
+    epochs = 5
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    # Paths
+    image_path = image_path
+    captions_path = captions_path
+
+    # Learning rates
     head_lr = 1e-3
     image_encoder_lr = 1e-4
     text_encoder_lr = 1e-5
+
+    # Model configuration
+    model_name = 'resnet50'
+    text_encoder_model = "distilbert-base-uncased"
+    text_tokenizer = "distilbert-base-uncased"
+
+    # Embedding and projection dimensions
+    image_embedding = 2048
+    text_embedding = 768
+    num_projection_layers = 1
+    projection_dim = 256
+
+    # Training parameters
     weight_decay = 1e-3
     patience = 1
-    factor = 0.8
-    epochs = 4
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-    model_name = 'resnet50'
-    image_embedding = 2048
-    text_encoder_model = "distilbert-base-uncased"
-    text_embedding = 768
-    text_tokenizer = "distilbert-base-uncased"
+    factor = 0.7
+    temperature = 1.0
     max_length = 200
 
-    pretrained = True # for both image encoder and text encoder
-    trainable = True # for both image encoder and text encoder
-    temperature = 1.0
+    # Pretraining and trainability
+    pretrained = True
+    trainable = True
 
-    # image size
-    size = 224
-
-    # for projection head; used for both image and text encoders
-    num_projection_layers = 1
-    projection_dim = 256 
+    # Image processing
+    size = 380  # image size
     dropout = 0.1

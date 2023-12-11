@@ -1,30 +1,3 @@
-import gc
-import numpy as np
-import pandas as pd
-import os
-import cv2
-import itertools
-import torch
-from torch import nn
-import torch.nn.functional as F
-import timm
-from tqdm.autonotebook import tqdm
-from albumentations.pytorch import ToTensorV2
-import albumentations as A
-import matplotlib.pyplot as plt
-from transformers import DistilBertModel, DistilBertConfig, DistilBertTokenizer
-
-
-!pip install kaggle --upgrade
-os.environ['KAGGLE_USERNAME'] = "aliasgerov"
-os.environ['KAGGLE_KEY'] = "f8c3bba39668787321b36cd550f85dbe"
-
-# For Flickr 8k
-!kaggle datasets download -d adityajn105/flickr8k
-!unzip flickr8k.zip
-dataset = "8k"
-
-
 class CLIPDataset(torch.utils.data.Dataset):
     def __init__(self, image_filenames, captions, tokenizer, transforms):
         """
