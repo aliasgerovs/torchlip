@@ -1,6 +1,7 @@
 # CLIP Model Implementation with PyTorch
 
-![image](https://github.com/aliasgerovs/torchlip/assets/49990436/a35d5600-699f-4793-9d28-b60bc99b9da7)
+![image](https://github.com/aliasgerovs/torchlip/assets/49990436/6ff1b6c8-8527-447a-a256-8b4b8753f9bf)
+
 
 
 ## Introduction
