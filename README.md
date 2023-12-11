@@ -1,5 +1,8 @@
 # CLIP Model Implementation with PyTorch
 
+![image](https://github.com/aliasgerovs/torchlip/assets/49990436/a35d5600-699f-4793-9d28-b60bc99b9da7)
+
+
 ## Introduction
 
 This project aims to implement a CLIP (Contrastive Language–Image Pretraining) model using PyTorch, inspired by OpenAI's original concept and methodologies presented in a Keras tutorial. The core innovation in this implementation is the ability of the model to understand the intricate relationship between text and images by leveraging complete sentences during training, rather than isolated classes. This approach is designed to enhance the model's adaptability and accuracy in interpreting and classifying images based on textual descriptions.
