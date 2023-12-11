@@ -1,7 +1,7 @@
 # CLIP Model Implementation with PyTorch
 
 <div align="center">
-  <img src=![image](https://github.com/aliasgerovs/torchlip/assets/49990436/6ff1b6c8-8527-447a-a256-8b4b8753f9bf)>
+  <img src="https://github.com/aliasgerovs/torchlip/assets/49990436/6ff1b6c8-8527-447a-a256-8b4b8753f9bf">
 </div>
 
 ## Introduction
