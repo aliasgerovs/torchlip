@@ -14,7 +14,7 @@ def get_transforms(mode="train"):
             ToTensorV2(always_apply=True),  # Convert image to PyTorch tensor format
         ])
     else:
-        # In 'test' or other modes, we only apply the necessary resizing and normalization.
+        # In 'test'  or other modes, we only apply the necessary resizing and normalization.
         return A.Compose([
             A.Resize(CFG.size, CFG.size, always_apply=True),
             A.Normalize(max_pixel_value=255.0, always_apply=True),
