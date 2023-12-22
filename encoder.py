@@ -1,7 +1,6 @@
+import timm
+
 class ImageEncoder(nn.Module):
-    """
-    Encode images to a fixed size vector
-    """
 
     def __init__(
         self, model_name='resnet50', pretrained=CFG.pretrained, trainable=CFG.trainable

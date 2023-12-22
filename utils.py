@@ -1,4 +1,4 @@
-class AvgMeter:
+class Average:
     def __init__(self, name="Metric"):
         self.name = name
         self.reset()

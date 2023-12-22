@@ -1,32 +1,8 @@
-class CLIPDataset(torch.utils.data.Dataset):
-    def __init__(self, image_filenames, captions, tokenizer, transforms):
-        """
-        image_filenames and cpations must have the same length; so, if there are
-        multiple captions for each image, the image_filenames must have repetitive
-        file names 
-        """
+import os
+import kaggle
 
-        self.image_filenames = image_filenames
-        self.captions = list(captions)
-        self.encoded_captions = tokenizer(
-            list(captions), padding=True, truncation=True, max_length=CFG.max_length
-        )
-        self.transforms = transforms
+os.environ['KAGGLE_USERNAME'] = "aliasgerov"
+os.environ['KAGGLE_KEY'] = "f8c3bba39668787321b36cd550f85dbe"
 
-    def __getitem__(self, idx):
-        item = {
-            key: torch.tensor(values[idx])
-            for key, values in self.encoded_captions.items()
-        }
-
-        image = cv2.imread(f"{CFG.image_path}/{self.image_filenames[idx]}")
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        image = self.transforms(image=image)['image']
-        item['image'] = torch.tensor(image).permute(2, 0, 1).float()
-        item['caption'] = self.captions[idx]
-
-        return item
-
-
-    def __len__(self):
-        return len(self.captions)
+!kaggle datasets download -d adityajn105/flickr8k
+!unzip flickr8k.zip

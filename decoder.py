@@ -1,4 +1,10 @@
-class TextEncoder(nn.Module):
+import gc
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from transformers import DistilBertModel, DistilBertConfig, DistilBertTokenizer
+
+class Decoder(nn.Module):
     def __init__(self, model_name=CFG.text_encoder_model, pretrained=CFG.pretrained, trainable=CFG.trainable):
         super().__init__()
         if pretrained:
