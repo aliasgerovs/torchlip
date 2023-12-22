@@ -1,44 +1,56 @@
-class CLIPModel(nn.Module):
+import gc
+import numpy as np
+import pandas as pd
+import os
+import cv2
+import itertools
+import torch
+from torch import nn
+import torch.nn.functional as F
+import matplotlib.pyplot as plt
+from transformers import DistilBertModel, DistilBertConfig, DistilBertTokenizer
+
+class CLIPNetwork(nn.Module):
     def __init__(
         self,
-        temperature=CFG.temperature,
-        image_embedding=CFG.image_embedding,
-        text_embedding=CFG.text_embedding,
+        temp_factor=CFG.temperature,
+        img_embedding_size=CFG.image_embedding,
+        txt_embedding_size=CFG.text_embedding,
     ):
-        super().__init__()
-        self.image_encoder = ImageEncoder()
-        self.text_encoder = TextEncoder()
-        self.image_projection = ProjectionHead(embedding_dim=image_embedding)
-        self.text_projection = ProjectionHead(embedding_dim=text_embedding)
-        self.temperature = temperature
+        super(CLIPNetwork, self).__init__()
+        self.visual_encoder = ImageEncoder()
+        self.language_decoder = Decoder()
+        self.visual_projection_head = ProjectionHead(embedding_dim=img_embedding_size)
+        self.language_projection_head = ProjectionHead(embedding_dim=txt_embedding_size)
+        self.temp_factor = temp_factor
 
-    def forward(self, batch):
-        # Getting Image and Text Features
-        image_features = self.image_encoder(batch["image"])
-        text_features = self.text_encoder(
-            input_ids=batch["input_ids"], attention_mask=batch["attention_mask"]
+    def forward(self, input_batch):
+        # Extract features from images and texts
+        visual_features = self.visual_encoder(input_batch["image"])
+        language_features = self.language_decoder(
+            input_ids=input_batch["input_ids"], attention_mask=input_batch["attention_mask"]
         )
-        # Getting Image and Text Embeddings (with same dimension)
-        image_embeddings = self.image_projection(image_features)
-        text_embeddings = self.text_projection(text_features)
+        # Project features to embeddings with the same dimensions
+        visual_embeddings = self.visual_projection_head(visual_features)
+        language_embeddings = self.language_projection_head(language_features)
 
-        # Calculating the Loss
-        logits = (text_embeddings @ image_embeddings.T) / self.temperature
-        images_similarity = image_embeddings @ image_embeddings.T
-        texts_similarity = text_embeddings @ text_embeddings.T
-        targets = F.softmax(
-            (images_similarity + texts_similarity) / 2 * self.temperature, dim=-1
+        # Loss calculation
+        sim_logits = (language_embeddings @ visual_embeddings.T) / self.temp_factor
+        visual_self_similarity = visual_embeddings @ visual_embeddings.T
+        language_self_similarity = language_embeddings @ language_embeddings.T
+        similarity_targets = F.softmax(
+            (visual_self_similarity + language_self_similarity) / 2 * self.temp_factor, dim=-1
         )
-        texts_loss = cross_entropy(logits, targets, reduction='none')
-        images_loss = cross_entropy(logits.T, targets.T, reduction='none')
-        loss =  (images_loss + texts_loss) / 2.0 # shape: (batch_size)
-        return loss.mean()
+        language_loss = cross_entropy_loss(sim_logits, similarity_targets, reduction_type='none')
+        visual_loss = cross_entropy_loss(sim_logits.T, similarity_targets.T, reduction_type='none')
+        total_loss = (visual_loss + language_loss) / 2.0  # shape: (batch_size)
+        return total_loss.mean()
 
 
-def cross_entropy(preds, targets, reduction='none'):
-    log_softmax = nn.LogSoftmax(dim=-1)
-    loss = (-targets * log_softmax(preds)).sum(1)
-    if reduction == "none":
-        return loss
-    elif reduction == "mean":
-        return loss.mean()
+def cross_entropy_loss(predictions, target_values, reduction_type='none'):
+    softmax_log = nn.LogSoftmax(dim=-1)
+    computed_loss = (-target_values * softmax_log(predictions)).sum(1)
+    if reduction_type == "none":
+        return computed_loss
+    elif reduction_type == "mean":
+        return computed_loss.mean()
