@@ -42,7 +42,19 @@ This project aims to implement a CLIP (Contrastive Language–Image Pretraining)
 ## Testing
    - Testing result for prompt "old man fishing"
 
-![Alt text](image.png)
+![Alt text](tests/image.png)
+
+   - Testing result for prompt "children playing soccer"
+
+![Alt text](tests/download-1.png)
+
+   - Testing result for prompt "image depicting a street performance"
+
+![Alt text](<tests/download (1)-1.png>)
+
+   - Testing result for prompt "a person interacting with an animal"
+
+![Alt text](<tests/download (2)-1.png>)
 
 ## License
 

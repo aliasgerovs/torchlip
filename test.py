@@ -79,7 +79,7 @@ def find_matches(model, image_embeddings, query, image_filenames, n=9):
 
 
 _, valid_df = split_dataset_into_train_and_valid()
-model, image_embeddings = get_image_embeddings(valid_df, "/content/drive/MyDrive/PyTorch Clip Model/best.pt")
+model, image_embeddings = get_image_embeddings(valid_df, "best.pt")
 
 
 find_matches(model,
