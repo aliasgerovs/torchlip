@@ -16,7 +16,9 @@ This project aims to implement a CLIP (Contrastive Language–Image Pretraining)
   - Integration of text and image understanding
   - Advanced training techniques including image and text projection heads
 
-You can download my pretrained model here - "https://drive.google.com/file/d/1AE6PqL0vqUoB379fvy3zVPjOBwwya40y/view?usp=drive_link"
+You can download my pretrained model here : https://drive.google.com/file/d/1AE6PqL0vqUoB379fvy3zVPjOBwwya40y/view?usp=drive_link. 
+
+After downloading model and kaggle dataset, please run the test.py file for the testing of the model.
 
 ## Methodology
 
