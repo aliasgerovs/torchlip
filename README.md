@@ -39,10 +39,10 @@ This project aims to implement a CLIP (Contrastive Language–Image Pretraining)
 - **Libraries:** PyTorch, HuggingFace
 - **Computational Resources:** Required for model training and testing
 
-## Expected Outcomes
+## Testing
+   - Testing result for prompt "old man fishing"
 
-- **Functional CLIP Model:** An operational model capable of accurately interpreting and relating images to textual descriptions.
-- **Enhanced Understanding:** Insights into the complex dynamics between visual and textual data, potentially paving the way for more intuitive AI systems.
+![Alt text](image.png)
 
 ## License
 
